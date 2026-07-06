@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.studentmanagement.exception.StudentNotFoundException;
 import com.example.studentmanagement.model.Student;
@@ -15,24 +16,26 @@ public class StudentService {
     @Autowired
     private StudentRepository repository;
 
-    // Get all students
+    // Get All Students
     public List<Student> getAllStudents() {
         return repository.findAll();
     }
 
-    // Get student by ID
+    // Get Student By ID
     public Student getStudentById(Integer id) {
         return repository.findById(id)
                 .orElseThrow(() ->
                         new StudentNotFoundException("Student not found with ID: " + id));
     }
 
-    // Add new student
+    // Save Student
+    @Transactional
     public Student saveStudent(Student student) {
         return repository.save(student);
     }
 
-    // Update existing student
+    // Update Student
+    @Transactional
     public Student updateStudent(Integer id, Student student) {
 
         Student existingStudent = repository.findById(id)
@@ -47,7 +50,8 @@ public class StudentService {
         return repository.save(existingStudent);
     }
 
-    // Delete student
+    // Delete Student
+    @Transactional
     public void deleteStudent(Integer id) {
 
         Student student = repository.findById(id)

@@ -1,18 +1,29 @@
 package com.example.studentmanagement.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name="students")
+@Table(name = "students")
 public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "Student name is required")
     private String name;
+
+    @Min(value = 18, message = "Age must be at least 18")
+    @Max(value = 60, message = "Age cannot be greater than 60")
     private Integer age;
+
+    @NotBlank(message = "Course is required")
     private String course;
+
+    @NotBlank(message = "City is required")
     private String city;
 
     public Student() {
