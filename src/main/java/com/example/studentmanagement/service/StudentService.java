@@ -3,6 +3,8 @@ package com.example.studentmanagement.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,31 +13,30 @@ import com.example.studentmanagement.model.Student;
 import com.example.studentmanagement.repository.StudentRepository;
 
 @Service
+@Transactional
 public class StudentService {
 
     @Autowired
     private StudentRepository repository;
 
-    // Get All Students
+    // Get all students
     public List<Student> getAllStudents() {
         return repository.findAll();
     }
 
-    // Get Student By ID
+    // Get student by ID
     public Student getStudentById(Integer id) {
         return repository.findById(id)
                 .orElseThrow(() ->
                         new StudentNotFoundException("Student not found with ID: " + id));
     }
 
-    // Save Student
-    @Transactional
+    // Save student
     public Student saveStudent(Student student) {
         return repository.save(student);
     }
 
-    // Update Student
-    @Transactional
+    // Update student
     public Student updateStudent(Integer id, Student student) {
 
         Student existingStudent = repository.findById(id)
@@ -50,8 +51,7 @@ public class StudentService {
         return repository.save(existingStudent);
     }
 
-    // Delete Student
-    @Transactional
+    // Delete student
     public void deleteStudent(Integer id) {
 
         Student student = repository.findById(id)
@@ -59,5 +59,20 @@ public class StudentService {
                         new StudentNotFoundException("Student not found with ID: " + id));
 
         repository.delete(student);
+    }
+
+    // Search by city
+    public List<Student> getStudentsByCity(String city) {
+        return repository.findStudentsByCity(city);
+    }
+
+    // Search by course
+    public List<Student> getStudentsByCourse(String course) {
+        return repository.findStudentsByCourse(course);
+    }
+
+    // Pagination
+    public Page<Student> getStudentsWithPagination(int page, int size) {
+        return repository.findAll(PageRequest.of(page, size));
     }
 }
