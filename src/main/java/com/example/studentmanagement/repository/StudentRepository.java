@@ -13,8 +13,7 @@ import com.example.studentmanagement.model.Student;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 
-    @Query("SELECT s FROM Student s")
-    List<Student> getAllStudents();
+  
 
     List<Student> findStudentsByCity(String city);
 
