@@ -22,7 +22,7 @@ public class StudentService {
 
     // Get all students
     public List<Student> getAllStudents() {
-        return repository.getAllStudents();
+        return repository.findAll();
     }
 
     // Get student by ID
