@@ -16,10 +16,8 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     @Query("SELECT s FROM Student s")
     List<Student> getAllStudents();
 
-    @Query("SELECT s FROM Student s WHERE s.city=?1")
     List<Student> findStudentsByCity(String city);
 
-    @Query("SELECT s FROM Student s WHERE s.course=?1")
     List<Student> findStudentsByCourse(String course);
 
     Page<Student> findAll(Pageable pageable);
