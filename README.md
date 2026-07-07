@@ -1,72 +1,184 @@
-# StudentManagementSystem
-Student Management System built using Spring Boot, Spring Data JPA, MySQL, and REST APIs with CRUD operations and exception handling.
+# 🎓 Student Management System
 
-# Student Management System
+A Spring Boot REST API project for managing student records using CRUD operations. This project demonstrates Java, Spring Boot, Spring Data JPA, MySQL, validation, pagination, custom queries, and exception handling.
 
-A Spring Boot CRUD application that performs Create, Read, Update, and Delete (CRUD) operations on student records using MySQL.
+---
 
-## Technologies Used
+## 🚀 Features
 
-- Java 17
-- Spring Boot 3
+- ➕ Add a new student
+- 📋 View all students
+- 🔍 View student by ID
+- ✏️ Update student details
+- ❌ Delete a student
+- 🏙️ Search students by city
+- 📚 Search students by course
+- 📄 Pagination support
+- ✅ Input validation
+- ⚠️ Global exception handling
+- 💾 MySQL database integration
+
+---
+
+## 🛠️ Technologies Used
+
+- Java 17+
+- Spring Boot 3.x
 - Spring Web
 - Spring Data JPA
 - MySQL
 - Maven
-- STS (Spring Tool Suite)
-- Postman
+- Jakarta Validation
+- Lombok (Optional)
+- STS 4 / Eclipse
+- MySQL Workbench
+- Git & GitHub
 
-## Features
+---
 
-- Add a Student
-- View All Students
-- View Student by ID
-- Update Student Details
-- Delete Student
-- Exception Handling
-- MySQL Database Integration
-
-## Project Structure
+## 📂 Project Structure
 
 ```
-src
- ├── main
- │   ├── java
- │   │    └── com.example.studentmanagement
- │   │          ├── controller
- │   │          ├── model
- │   │          ├── repository
- │   │          ├── service
- │   │          ├── exception
- │   │          └── StudentManagementApplication.java
- │   └── resources
- │         └── application.properties
+StudentManagement
+│
+├── controller
+│      StudentController.java
+│
+├── service
+│      StudentService.java
+│
+├── repository
+│      StudentRepository.java
+│
+├── model
+│      Student.java
+│
+├── exception
+│      StudentNotFoundException.java
+│      ErrorResponse.java
+│      GlobalExceptionHandler.java
+│
+├── resources
+│      application.properties
+│
+└── StudentManagementApplication.java
 ```
 
-## API Endpoints
+---
+
+## 🗄️ Database Configuration
+
+Update `application.properties` with your MySQL credentials.
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/studentdb
+spring.datasource.username=root
+spring.datasource.password=your_password
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+```
+
+---
+
+## 📌 REST API Endpoints
 
 | Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /students | Get all students |
-| GET | /students/{id} | Get student by ID |
-| POST | /students | Add new student |
-| PUT | /students/{id} | Update student |
-| DELETE | /students/{id} | Delete student |
+|---------|----------|-------------|
+| GET | `/students` | Get all students |
+| GET | `/students/{id}` | Get student by ID |
+| POST | `/students` | Add a student |
+| PUT | `/students/{id}` | Update student |
+| DELETE | `/students/{id}` | Delete student |
+| GET | `/students/city/{city}` | Search by city |
+| GET | `/students/course/{course}` | Search by course |
+| GET | `/students/page?page=0&size=5` | Get students with pagination |
 
-## Database
+---
 
-Database Name:
+## 📥 Sample JSON Request
+
+```json
+{
+  "name": "Vedika Pawade",
+  "age": 21,
+  "course": "Computer Science",
+  "city": "Nagpur"
+}
+```
+
+---
+
+## ▶️ How to Run
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/vedikapawade/StudentManagementSystem.git
+```
+
+2. Open the project in STS or Eclipse.
+
+3. Configure MySQL in `application.properties`.
+
+4. Create the database:
+
+```sql
+CREATE DATABASE studentdb;
+```
+
+5. Run the project as a Spring Boot Application.
+
+6. Test the REST APIs using Postman.
+
+---
+
+## 📸 API Testing
+
+Example:
 
 ```
-studentdb
+GET http://localhost:8080/students
 ```
 
-Table Name:
-
 ```
-students
+POST http://localhost:8080/students
 ```
 
-## Author
+```
+PUT http://localhost:8080/students/1
+```
 
-Vedika Pawade
+```
+DELETE http://localhost:8080/students/1
+```
+
+---
+
+## 🔮 Future Enhancements
+
+- JWT Authentication
+- Spring Security
+- Swagger/OpenAPI Documentation
+- Role-Based Access Control
+- Caching
+- Sorting and Filtering
+- Docker Support
+- Unit and Integration Testing
+
+---
+
+## 👩‍💻 Author
+
+**Vedika Pawade**
+
+- B.Tech Computer Science Engineering
+- Java Full Stack Developer
+- Spring Boot | MySQL | REST API
+
+---
+
+## 📄 License
+
+This project is developed for learning purposes and academic use.
