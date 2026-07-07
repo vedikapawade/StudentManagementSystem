@@ -26,7 +26,12 @@ public class Student {
     @NotBlank(message = "City is required")
     private String city;
 
-    public Student() {
+    @Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", age=" + age + ", course=" + course + ", city=" + city + "]";
+	}
+
+	public Student() {
     }
 
     public Student(Integer id, String name, Integer age, String course, String city) {
