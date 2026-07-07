@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,54 +24,65 @@ public class StudentController {
 
     // Get all students
     @GetMapping
-    public List<Student> getAllStudents() {
-        return service.getAllStudents();
+    public ResponseEntity<List<Student>> getAllStudents() {
+        return ResponseEntity.ok(service.getAllStudents());
     }
 
     // Get student by ID
     @GetMapping("/{id}")
-    public Student getStudentById(@PathVariable Integer id) {
-        return service.getStudentById(id);
+    public ResponseEntity<Student> getStudentById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getStudentById(id));
     }
 
     // Add student
     @PostMapping
-    public Student addStudent(@Valid @RequestBody Student student) {
-        return service.saveStudent(student);
+    public ResponseEntity<Student> addStudent(@Valid @RequestBody Student student) {
+
+        Student savedStudent = service.saveStudent(student);
+
+        return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
     }
 
     // Update student
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Integer id,
-                                 @Valid @RequestBody Student student) {
-        return service.updateStudent(id, student);
+    public ResponseEntity<Student> updateStudent(@PathVariable Integer id,
+                                                 @Valid @RequestBody Student student) {
+
+        Student updatedStudent = service.updateStudent(id, student);
+
+        return ResponseEntity.ok(updatedStudent);
     }
 
     // Delete student
     @DeleteMapping("/{id}")
-    public String deleteStudent(@PathVariable Integer id) {
+    public ResponseEntity<String> deleteStudent(@PathVariable Integer id) {
+
         service.deleteStudent(id);
-        return "Student deleted successfully.";
+
+        return ResponseEntity.ok("Student deleted successfully.");
     }
 
-    // Search students by city
+    // Search by City
     @GetMapping("/city/{city}")
-    public List<Student> getStudentsByCity(@PathVariable String city) {
-        return service.getStudentsByCity(city);
+    public ResponseEntity<List<Student>> getStudentsByCity(@PathVariable String city) {
+
+        return ResponseEntity.ok(service.getStudentsByCity(city));
     }
 
-    // Search students by course
+    // Search by Course
     @GetMapping("/course/{course}")
-    public List<Student> getStudentsByCourse(@PathVariable String course) {
-        return service.getStudentsByCourse(course);
+    public ResponseEntity<List<Student>> getStudentsByCourse(@PathVariable String course) {
+
+        return ResponseEntity.ok(service.getStudentsByCourse(course));
     }
 
     // Pagination
     @GetMapping("/page")
-    public Page<Student> getStudentsWithPagination(
+    public ResponseEntity<Page<Student>> getStudentsWithPagination(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
 
-        return service.getStudentsWithPagination(page, size);
+        return ResponseEntity.ok(service.getStudents(page, size));
     }
+
 }

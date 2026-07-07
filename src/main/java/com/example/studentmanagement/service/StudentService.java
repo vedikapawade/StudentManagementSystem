@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,17 +22,17 @@ public class StudentService {
 
     // Get all students
     public List<Student> getAllStudents() {
-        return repository.findAll();
+        return repository.getAllStudents();
     }
 
     // Get student by ID
     public Student getStudentById(Integer id) {
         return repository.findById(id)
                 .orElseThrow(() ->
-                        new StudentNotFoundException("Student not found with ID: " + id));
+                        new StudentNotFoundException("Student not found with ID : " + id));
     }
 
-    // Save student
+    // Add student
     public Student saveStudent(Student student) {
         return repository.save(student);
     }
@@ -39,16 +40,16 @@ public class StudentService {
     // Update student
     public Student updateStudent(Integer id, Student student) {
 
-        Student existingStudent = repository.findById(id)
+        Student existing = repository.findById(id)
                 .orElseThrow(() ->
-                        new StudentNotFoundException("Student not found with ID: " + id));
+                        new StudentNotFoundException("Student not found with ID : " + id));
 
-        existingStudent.setName(student.getName());
-        existingStudent.setAge(student.getAge());
-        existingStudent.setCourse(student.getCourse());
-        existingStudent.setCity(student.getCity());
+        existing.setName(student.getName());
+        existing.setAge(student.getAge());
+        existing.setCourse(student.getCourse());
+        existing.setCity(student.getCity());
 
-        return repository.save(existingStudent);
+        return repository.save(existing);
     }
 
     // Delete student
@@ -56,23 +57,27 @@ public class StudentService {
 
         Student student = repository.findById(id)
                 .orElseThrow(() ->
-                        new StudentNotFoundException("Student not found with ID: " + id));
+                        new StudentNotFoundException("Student not found with ID : " + id));
 
         repository.delete(student);
     }
 
-    // Search by city
+    // Search by City
     public List<Student> getStudentsByCity(String city) {
         return repository.findStudentsByCity(city);
     }
 
-    // Search by course
+    // Search by Course
     public List<Student> getStudentsByCourse(String course) {
         return repository.findStudentsByCourse(course);
     }
 
     // Pagination
-    public Page<Student> getStudentsWithPagination(int page, int size) {
-        return repository.findAll(PageRequest.of(page, size));
+    public Page<Student> getStudents(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return repository.findAll(pageable);
     }
+
 }
